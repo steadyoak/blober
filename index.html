@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发送 Blob 示例</title>
+</head>
+<body>
+
+    <h1>发送图片 Blob</h1>
+    <img id="img1" src="a.jpg" alt="Image" style="display: none;">
+
+    <script>
+        // 等待网页加载完毕
+        window.addEventListener('load', function() {
+            const imgElement = document.getElementById('img1');
+
+            // 创建 canvas 元素
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // 设置 canvas 大小
+            canvas.width = imgElement.width;
+            canvas.height = imgElement.height;
+
+            // 将图片绘制到 canvas 上
+            ctx.drawImage(imgElement, 0, 0);
+
+            // 将 canvas 转换为 Blob
+            canvas.toBlob(function(blob) {
+                // 发送 Blob 对象
+                window.parent.postMessage(blob, '*');
+            }, 'image/png'); // 指定 MIME 类型
+        });
+    </script>
+
+</body>
+</html>
